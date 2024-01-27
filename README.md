@@ -22,5 +22,12 @@ need thoughts on :
 
 - seller page : (login with seller user/id) : see sales and orders here
 
-- What more do we need 
+- What more do we need
+
+requirement type shit:
+Nice looking UI
+  -Front page with Image carousel
+  -Tabs for sections of type of clothes
+  -Filters while serching tabs of clothing
+  
 
