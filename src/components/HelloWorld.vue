@@ -1,6 +1,6 @@
 <template>
   <div class="ecommerce">
-    <h1>Welcome to our E-Commerce Store</h1>
+    <h1>Welcome to Fractal</h1>
     <div class="product-list">
       <div v-for="(product, index) in products" :key="index" class="product-card">
         <img :src="product.image" alt="Product Image" class="product-image">
@@ -21,6 +21,65 @@
 </template>
 
 <script>
+import { db } from "@/components/firebaseInit.js";
+ // Adjust the path as necessary
+import { collection, getDocs } from "firebase/firestore";
+
+export default {
+  name: 'EcommercePage',
+  data() {
+    return {
+      products: [],
+      cart: [],
+    };
+  },
+  async created() {
+    await this.fetchProducts();
+  },
+  methods: {
+
+    async fetchProducts() {
+  try {
+    console.log(this.products)
+    const querySnapshot = await getDocs(collection(db, "Accessories"));
+    console.log("Documents:", querySnapshot.docs);
+    this.products = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      name: doc.data().Name,
+      description: doc.data().Description,
+      price: doc.data().Price,
+      image: doc.data().Image,
+    }));
+    console.log(this.products);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+  }
+},
+
+
+    
+/*
+    async fetchProducts() {
+      const querySnapshot = await getDocs(collection(db, "products"));
+      this.products = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+    },
+*/
+
+
+    addToCart(product) {
+      this.cart.push(product);
+    },
+  },
+};
+
+
+
+
+/*
+
 export default {
   name: 'EcommercePage',
   data() {
@@ -38,6 +97,12 @@ export default {
           price: 29.99,
           image: 'product2.jpg',
         },
+        {
+          name: 'Product 3',
+          description: 'Description of Product 3',
+          price: 69.99,
+          image: 'product3.jpg',
+        }
         // Add more products here
       ],
       cart: [],
@@ -49,6 +114,10 @@ export default {
     },
   },
 };
+
+*/
+
+
 </script>
 
 <style scoped>
