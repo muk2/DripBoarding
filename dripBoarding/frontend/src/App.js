@@ -1,38 +1,73 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, Container, Carousel, Row, Col, Card} from 'react-bootstrap';
-
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import { BrowserRouter as Router, Route, Switch, Routes, BrowserRouter, Link } from 'react-router-dom';
+import Snowboard from './SnowPage';
+import Accessories from './Access';
 import logo from './logo.svg'; // Your logo here
 import clothingImage1 from './clothing.jpeg'; // Replace with actual image paths
 import clothingImage2 from './clothing2.jpg';
 
 function App() {
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  
+    const toggleDrawer = (open) => (event) => {
+      if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+        return;
+      }
+      setIsDrawerOpen(open);
+    };
   return (
+    
     <div>
       {/* Navigation Bar */}
-      <Navbar bg="light" expand="lg">
-        <Container>
-          <Navbar.Brand href="#home">
-            <img
-              src={logo}
-              width="30"
-              height="30"
-              className="d-inline-block align-top"
-              alt="Clothing Store Logo"
-            />
-            Clothing Store Name
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ml-auto">
-              <Nav.Link href="#men">Men</Nav.Link>
-              <Nav.Link href="#women">Women</Nav.Link>
-              <Nav.Link href="#kids">Kids</Nav.Link>
-              <Nav.Link href="#sale">Sale</Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+      <AppBar position="fixed">
+        <Toolbar>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            onClick={toggleDrawer(true)}
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Clothing Store
+          </Typography>
+          <Button color="inherit">Login</Button>
+        </Toolbar>
+      </AppBar>
+      <Toolbar /> {/* This empty Toolbar is used to offset the content below the AppBar */}
+
+      {/* Drawer Component */}
+      <Drawer
+        anchor="left"
+        open={isDrawerOpen}
+        onClose={toggleDrawer(false)}
+      >
+        <List>
+          <ListItem button onClick={toggleDrawer(false)}>
+            <ListItemText primary="Men" />
+          </ListItem>
+          <ListItem button onClick={toggleDrawer(false)}>
+            <ListItemText primary="Women" />
+          </ListItem>
+          {/* Add more items if needed */}
+        </List>
+      </Drawer>
+  
+  
 
       {/* Bootstrap Carousel */}
       <Carousel>
@@ -43,8 +78,8 @@ function App() {
             alt="Latest Collection"
           />
           <Carousel.Caption>
-            <h3>Summer Collection 2024</h3>
-            <p>Explore the latest trends in summer fashion.</p>
+            <h3>Winter Collection 2024</h3>
+            <p>Explore the latest trends in winter fashion.</p>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
